@@ -17,6 +17,8 @@ namespace CleanArchitecture.API.Controllers
         }
 
         //método httpPost, é o nosso endpoint 
+
+        [HttpPost]
         public async Task<ActionResult<CreateUserResponse>> Create(CreateUserRequest request, CancellationToken cancellationToken)//estamos criando o método Create, que será chamado quando houver um request HttpPost para a rota "api/[controller]". Ele vai receber um objeto do tipo CreateUserRequest (dados para criar um novo usuário) e um CancellationToken para, se quiser, cancelar o request.
         {
             //fazendo uma validação caso tenha erro
