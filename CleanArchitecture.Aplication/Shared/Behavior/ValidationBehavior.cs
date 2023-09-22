@@ -21,7 +21,7 @@ namespace CleanArchitecture.Aplication.Shared.Behavior
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)//esse método é chamado quando uma solicitação/request for processada pelo MediatR, e ele vai implementar a lógica de validação do request. 
         {
-            if (_validators.Any())//verifica se existem validadores na lista de _validators. Se não houver nenhum validador, o request é passado para o próximo comportamento (next())
+            if (!_validators.Any())//verifica se existem validadores na lista de _validators. Se não houver nenhum validador, o request é passado para o próximo comportamento (next())
                 return await next();
 
             var context = new ValidationContext<TRequest>(request);//se houver validadores, é criado um ValidationContext que vai ser validado. Em seguida, a validação é executada dentro da condição abaixo:
