@@ -1,11 +1,13 @@
 using CleanArchitecture.Persistence.Context;
 using CleanArchitecture.Persistence;
 using CleanArchitecture.Aplication.Services;
+using CleanArchitecture.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigurePersistenceApp(builder.Configuration);
 builder.Services.ConfigureApplicationApp();
+builder.Services.ConfigureCorsPolicy();
 
 builder.Services.AddControllers();
 
@@ -18,6 +20,7 @@ CreateDatabase(app);
 
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseCors();
 app.MapControllers();
 app.Run();
 
