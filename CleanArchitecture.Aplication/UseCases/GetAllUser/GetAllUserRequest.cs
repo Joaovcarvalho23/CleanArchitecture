@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Aplication.UseCases.GetAllUser
 {
-    public sealed record GetAllUserRequest : 
-        IRequest<List<GetAllUserResponse>>;
+    public sealed record GetAllUserRequest : IRequest<List<GetAllUserResponse>>;
 }
 
 //Esse método vai retornar uma lista de GetAllUserResponse

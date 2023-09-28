@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Aplication.UseCases.GetAllUser
 {
-    public class GetAllUserValidator : AbstractValidator<GetAllUserResponse>
+    public class GetAllUserValidator : AbstractValidator<GetAllUserRequest>
     {
         public GetAllUserValidator()
         {

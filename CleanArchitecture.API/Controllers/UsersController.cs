@@ -10,7 +10,7 @@ namespace CleanArchitecture.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IMediator _mediator;//atributo que vai ser usada para injetar uma instância do Mediator no construtor
+        IMediator _mediator;//atributo que vai ser usada para injetar uma instância do Mediator no construtor
 
         public UsersController(IMediator mediator)
         {
@@ -18,9 +18,10 @@ namespace CleanArchitecture.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<GetAllUserResponse>>> GetAll (CancellationToken cancellationToken)
+        public async Task<ActionResult<List<GetAllUserResponse>>> 
+            GetAll (CancellationToken cancellationToken)
         {
-            var response = await _mediator.Send(new GetAllUserResponse(), cancellationToken);// nesse response, dentro do método .Send(), vamos criar uma nova instância do nosso GetAllUserResponse, ou um cancellationToken.
+            var response = await _mediator.Send(new GetAllUserRequest(), cancellationToken);// nesse response, dentro do método .Send(), vamos criar uma nova instância do nosso GetAllUserResponse, ou um cancellationToken.
             return Ok(response);
         }//esse código trata com request httpget para obter uma lista de usuários. O request é manipulado via _mediator que envia (Send) para o manipulador apropriado. Ele sabe qual é o manipulador apropriado com base no GetAllUserResponse(). Daí, o manipulador vai executar a lógica necessária para obter os dados do usuário (GetAllUserHandler) e vai retornar a resposta na forma de uma lista de objetos GetAllUserResponse, e a resposta vai ser enviada de volta ao cliente com status http 200 
 
