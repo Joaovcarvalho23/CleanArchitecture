@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Aplication.UseCases.CreateUser;
 using CleanArchitecture.Aplication.UseCases.GetAllUser;
+using CleanArchitecture.Aplication.UseCases.UpdateUser;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,17 @@ namespace CleanArchitecture.API.Controllers
 
             var response = await _mediator.Send(request, cancellationToken);//Estamos usando o método Send do Mediator para enviar o objeto request (do tipo CreateUserRequest) que vai fazer roteamento para o nosso comando, que vai ser o CreateUserHandler; e o await vai aguardar a execução do manipulador que vai retornar uma resposta, que vai ser do tipo CreateUserResponse.
             return Ok(response);//retornamos para o usuário um http 200 contendo a resposta obtida do manipulador que vai conter os detalhes do usuário que foi criado.
+        }
+
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<UpdateUserResponse>> Update(Guid id,  UpdateUserRequest request, CancellationToken cancellationToken)
+        {
+            if (id != request.Id)
+                return BadRequest();//verificamos se o Id que estamos passando é diferente do Id que estamos passando no request. Se for verdade, retorna um BadRequest (http 400)
+
+            var response = await _mediator.Send(request, cancellationToken);//envia o request para o manipulador usando o _mediator
+            return Ok(response);//retorna resposta ao cliente
         }
         
     }
