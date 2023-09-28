@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Aplication.UseCases.CreateUser;
+using CleanArchitecture.Aplication.UseCases.GetAllUser;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +17,15 @@ namespace CleanArchitecture.API.Controllers
             _mediator = mediator;
         }
 
-        //método httpPost, é o nosso endpoint 
+        [HttpGet]
+        public async Task<ActionResult<List<GetAllUserResponse>>> GetAll (CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(new GetAllUserResponse(), cancellationToken);// nesse response, dentro do método .Send(), vamos criar uma nova instância do nosso GetAllUserResponse, ou um cancellationToken.
+            return Ok(response);
+        }
 
+
+        //método httpPost, é o nosso endpoint 
         [HttpPost]
         public async Task<ActionResult<CreateUserResponse>> Create(CreateUserRequest request, CancellationToken cancellationToken)//estamos criando o método Create, que será chamado quando houver um request HttpPost para a rota "api/[controller]". Ele vai receber um objeto do tipo CreateUserRequest (dados para criar um novo usuário) e um CancellationToken para, se quiser, cancelar o request.
         {
