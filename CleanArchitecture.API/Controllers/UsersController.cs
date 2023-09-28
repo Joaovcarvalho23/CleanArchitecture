@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Aplication.UseCases.CreateUser;
+using CleanArchitecture.Aplication.UseCases.DeleteUser;
 using CleanArchitecture.Aplication.UseCases.GetAllUser;
 using CleanArchitecture.Aplication.UseCases.UpdateUser;
 using MediatR;
@@ -54,6 +55,19 @@ namespace CleanArchitecture.API.Controllers
 
             var response = await _mediator.Send(request, cancellationToken);//envia o request para o manipulador usando o _mediator
             return Ok(response);//retorna resposta ao cliente
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<DeleteUserResponse>> Delete (Guid? id, CancellationToken cancellationToken)
+        {
+            if(id is null)
+                return BadRequest();
+
+            var deleteUserRequest = new DeleteUserRequest(id.Value); //aqui estamos preparando os dados necessários para solicitar a exclusão do usuário
+
+            var response = await _mediator.Send(deleteUserRequest, cancellationToken);
+            return Ok(response);
         }
         
     }
